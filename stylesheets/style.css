@@ -22,12 +22,53 @@ h3														{font-size:160%;}
 h4														{font-size:140%;}
 h5														{font-size:120%;}
 h6														{font-size:90%;}
-h1,h2,h3,h4,h5,h6										{font-weight:bold; margin-bottom:20px;}
+h1,h2,h3,h4,h5,h6										{font-weight:bold; margin-bottom:20px; color:#fff;}
 /***** End of Reset ********/
-
+body													{background: url(../images/body_bg.png) 0 0 repeat #343227; margin-top:10px;}
 header, footer											{width:900px; margin:0px auto;}
+header													{margin-top:30px; text-align:center;}
 
-article#main											{width:836px; font-size:1350%; border:2px solid #000; overflow:hidden; padding:0px 30px; margin:0px auto; border-radius:20px; -moz-border-radius:20px; text-align:center;}
+article#main											{width:850px; font-size:1350%; overflow:hidden; padding:14px 25px; margin:0px auto; text-align:center; background: url(../images/clock_bg.png) 0px 0px no-repeat; color:#fff; height:222px; position:relative;}
 
-section.clock											{float:left;}
-section.clock_divider									{float:left;}
+section.number											{float:left; margin-left:12px; margin-top:18px; position:relative;height:160px; width:98px;}
+section.number.first									{margin-left:42px;}
+section.number.first:first-child						{margin-left:0px;}
+section.number div.upper_number,
+section.number div.lower_number							{height:80px; width:98px; overflow:hidden; font-size:40%; position:absolute; text-indent:-99999px; overflow:hidden;}
+section.number div.upper_number							{left:0px; top:0; background-position:0 0; background-repeat:no-repeat;}
+section.number div.lower_number							{top: 90px;left:0px; background-position:0 0; background-repeat:no-repeat;}
+
+div.upper_number.zero									{background:url(../images/zero_top.png);}
+div.upper_number.one									{background:url(../images/one_top.png);}
+div.upper_number.two									{background:url(../images/two_top.png);}
+div.upper_number.three									{background:url(../images/three_top.png);}
+div.upper_number.four									{background:url(../images/four_top.png);}
+div.upper_number.five									{background:url(../images/five_top.png);}
+div.upper_number.six									{background:url(../images/six_top.png);}
+div.upper_number.seven									{background:url(../images/seven_top.png);}
+div.upper_number.eight									{background:url(../images/eight_top.png);}
+div.upper_number.nine									{background:url(../images/nine_top.png);}
+
+div.lower_number.zero									{background:url(../images/zero_bottom.png);}
+div.lower_number.one									{background:url(../images/one_bottom.png);}
+div.lower_number.two									{background:url(../images/two_bottom.png);}
+div.lower_number.three									{background:url(../images/three_bottom.png);}
+div.lower_number.four									{background:url(../images/four_bottom.png);}
+div.lower_number.five									{background:url(../images/five_bottom.png);}
+div.lower_number.six									{background:url(../images/six_bottom.png);}
+div.lower_number.seven									{background:url(../images/seven_bottom.png);}
+div.lower_number.eight									{background:url(../images/eight_bottom.png);}
+div.lower_number.nine									{background:url(../images/nine_bottom.png);}
+
+div.number_ring											{background:url(../images/number_ring.png) 0 0 no-repeat; text-indent:-99999px; overflow:hidden; height:40px; width:29px; z-index:999; position:absolute; top:66px; left:34px;}
+
+section.clock_divider									{position:absolute; top:-8px;}
+section#day_divider										{left:120px;}
+section#hour_divider									{left:370px;}
+section#min_divider										{left:620px;}
+
+section.label											{position:absolute; top:5px; font-size:10%;}
+section#days_label										{left:55px;}
+section#hours_label										{left:247px;}
+section#minutes_label									{left:488px;}
+section#seconds_label									{left:735px;}
