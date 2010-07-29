@@ -10,16 +10,16 @@
 	<script type="text/javascript" src="scripts/script.js"></script>
 	<!--[if lt IE 9]>
 	<script>document.createElement('header'); document.createElement('footer'); document.createElement('section'); document.createElement('aside'); document.createElement('nav'); document.createElement('article');</script>
+	<link rel="stylesheet" href="stylesheets/ie.css" />	
 	<![endif]-->
 </head>
 <body>
 	<header>
 		<h1>Countdown to 5 O'clock Friday</h1>
 	</header>
-	<article id="main">
-	</article>
+	<div id="main">
+	</div>
 	<footer>
-		
 	</footer>
 </body>
 </html>

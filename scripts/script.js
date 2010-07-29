@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	var first_str = "<section class=\"number first\"><div class=\"upper_number\">0</div><div class=\"lower_number\">0</div><div class=\"number_ring\"></div></section>";
-	var second_str = "<section class=\"number second\"><div class=\"upper_number\">0</div><div class=\"lower_number\">0</div><div class=\"number_ring\"></div></section>"
+	var first_str = "<div class=\"number first\"><div class=\"upper_number\">0</div><div class=\"lower_number\">0</div><div class=\"number_ring\"></div></div>";
+	var second_str = "<div class=\"number second\"><div class=\"upper_number\">0</div><div class=\"lower_number\">0</div><div class=\"number_ring\"></div></div>"
 	
 	var clock = {
 		day: {
@@ -36,14 +36,14 @@ $(document).ready(function(){
 	clock_container.append(clock.sec.first);
 	clock_container.append(clock.sec.second);
 	
-	clock_container.append($('<section id="day_divider" class="clock_divider">:</section>'));
-	clock_container.append($('<section id="hour_divider" class="clock_divider">:</section>'));
-	clock_container.append($('<section id="min_divider" class="clock_divider">:</section>'));
+	clock_container.append($('<div id="day_divider" class="clock_divider">:</div>'));
+	clock_container.append($('<div id="hour_divider" class="clock_divider">:</div>'));
+	clock_container.append($('<div id="min_divider" class="clock_divider">:</div>'));
 	
-	clock_container.append($('<section id="days_label" class="label">Days</section>'));
-	clock_container.append($('<section id="hours_label" class="label">Hours</section>'));
-	clock_container.append($('<section id="minutes_label" class="label">Minutes</section>'));
-	clock_container.append($('<section id="seconds_label" class="label">Seconds</section>'));
+	clock_container.append($('<div id="days_label" class="label">Days</div>'));
+	clock_container.append($('<div id="hours_label" class="label">Hours</div>'));
+	clock_container.append($('<div id="minutes_label" class="label">Minutes</div>'));
+	clock_container.append($('<div id="seconds_label" class="label">Seconds</div>'));
 	
 	var Today = new Date();
 	var days_till_friday = 5 - Today.getDay();
@@ -59,7 +59,11 @@ $(document).ready(function(){
 	
 	var time_left = (Friday - Today)/1000;		//in seconds
 	if(time_left < 0){
-		start_dancing();
+		init_number(0, clock.day);
+		init_number(0, clock.hour);
+		init_number(0, clock.min);
+		init_number(0, clock.sec);
+		setTimeout(start_dancing, 500);
 	}
 	else{
 		var days_left = time_left/(3600 * 24);
@@ -78,81 +82,81 @@ $(document).ready(function(){
 	}
 	
 	function change_clock(){
-			countdown(clock.sec.second);
-			var now = new Date();
-			
-			if(Friday - now > 1000)
-				setTimeout(change_clock,1000);
-			else
-				setTimeout(start_dancing, 2000);
-		}
+		countdown(clock.sec.second);
+		var now = new Date();
 		
-		function countdown(number){
-			var new_num = $('div',number).first().text() - 1;
-			if(new_num < 0){
-				if(number.hasClass('second')){
-					if(number.hasClass('hour')){
-						flip_number(number, 3);
-					}
-					else{
-						flip_number(number, 9);
-					}
+		if(Friday - now > 1000)
+			setTimeout(change_clock,1000);
+		else
+			setTimeout(start_dancing, 500);
+	}
+	
+	function countdown(number){
+		var new_num = $('div',number).first().text() - 1;
+		if(new_num < 0){
+			if(number.hasClass('second')){
+				if(number.hasClass('hour')){
+					flip_number(number, 3);
 				}
 				else{
-					if(number.hasClass('hour')){
-						flip_number(number, 2);
-					}
-					else{
-						flip_number(number, 5);
-					}
+					flip_number(number, 9);
 				}
-				countdown(number.prev('section.number:first'));
 			}
-			else
-				flip_number(number, new_num);
+			else{
+				if(number.hasClass('hour')){
+					flip_number(number, 2);
+				}
+				else{
+					flip_number(number, 5);
+				}
+			}
+			countdown(number.prev('div.number:first'));
+		}
+		else
+			flip_number(number, new_num);
+	}
+	
+	function flip_number(number, new_number){
+		var num_parts = {
+			upper: $('div.upper_number:first', number),
+			lower: $('div.lower_number:first', number)
 		}
 		
-		function flip_number(number, new_number){
-			var num_parts = {
-				upper: $('div.upper_number:first', number),
-				lower: $('div.lower_number:first', number)
-			}
-			
-			var upClone = num_parts.upper.clone();
-			var lowClone = num_parts.lower.clone();
-			lowClone.css('height','0px');
-			number.append(upClone);
-			number.append(lowClone);
-			
-			for(n in numbers){
-				num_parts.upper.removeClass(numbers[n]);
-				lowClone.removeClass(numbers[n]);
-			}
-			
-			num_parts.upper.text(new_number);
-			num_parts.upper.addClass(numbers[new_number]);
-			
-			lowClone.text(new_number);
-			lowClone.addClass(numbers[new_number]);
-			upClone.css({'top': '4px'})
-			
-			upClone.animate({'height': '0px','top': num_parts.upper.innerHeight() + "px"}, {
-				duration: 400,
-				queue: false,
-				easing: 'easeInQuart',
-				complete: function (){
-					lowClone.animate({'height': num_parts.lower.innerHeight() + "px"}, {
-						duration: 400,
-						queue: false,
-						easing: 'easeOutBounce',
-						complete: function(){
-							upClone.detach();
-							num_parts.lower.detach();
-						}
-					});
-				}
-			});		
+		var upClone = num_parts.upper.clone();
+		var lowClone = num_parts.lower.clone();
+		lowClone.css('height','0px');
+		number.append(upClone);
+		number.append(lowClone);
+		
+		for(n in numbers){
+			num_parts.upper.removeClass(numbers[n]);
+			lowClone.removeClass(numbers[n]);
 		}
+		
+		num_parts.upper.text(new_number);
+		num_parts.upper.addClass(numbers[new_number]);
+		
+		lowClone.text(new_number);
+		lowClone.addClass(numbers[new_number]);
+		upClone.css({'top': '4px'})
+		
+		upClone.animate({'height': '0px','top': num_parts.upper.innerHeight() + "px"}, {
+			duration: 300,
+			queue: false,
+			easing: 'easeInQuart',
+			complete: function (){
+				lowClone.animate({'height': num_parts.lower.innerHeight() + "px"}, {
+					duration: 300,
+					queue: false,
+					easing: 'easeOutBounce',
+					complete: function(){
+						upClone.detach();
+						num_parts.lower.detach();
+					}
+				});
+			}
+		});		
+	}
 	
 	function init_number(number, num_container){
 		var i = number.toString();
@@ -179,8 +183,13 @@ $(document).ready(function(){
 	}
 	
 	function start_dancing(){
-		clock_container.empty();
-		clock_container.attr('id','happy_dance');
+		clock_container.effect('explode',{pieces: 20},'fast',function(){
+			clock_container.empty();
+			clock_container.attr('id','happy_dance');
+			clock_container.show();
+			clock_container.effect('shake',{times:5},100)
+		});
+		
 	}
 });
 
